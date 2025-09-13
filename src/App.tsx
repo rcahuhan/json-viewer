@@ -227,7 +227,15 @@ const App: React.FC = () => {
             </Button>
           </ListItem>
         </List>
-      </Box>
+
+  <Box sx={{ textAlign: "center", mt: 2 }}>
+    <Typography variant="caption" sx={{ color: "#aaa" }}>
+      © Rohit Chauhan
+    </Typography>
+  </Box>
+</Box>
+        
+
 
       {/* Content Area */}
       <Box
