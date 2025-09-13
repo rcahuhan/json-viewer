@@ -235,7 +235,8 @@ const App: React.FC = () => {
         display="flex"
         flexDirection="column"
         p={2}
-        sx={{ minHeight: 0 }}
+        // CRITICAL FIX: The height must be explicitly set on this container
+        height="100vh" // This line is the key. It sets a fixed height for the content area.
       >
         {error && (
           <Box
@@ -254,11 +255,13 @@ const App: React.FC = () => {
 
         {mode === "text" ? (
           <Box
-            flex={1}
             sx={{
+              flex: 1,
               display: "flex",
-              flexDirection: "column",
-              minHeight: 0,
+              position: "relative",
+              bgcolor: "#1e1e1e",
+              borderRadius: 2,
+              overflow: "hidden" // Add this to contain the TextField
             }}
           >
             <TextField
@@ -271,22 +274,33 @@ const App: React.FC = () => {
               }}
               placeholder="Paste or type your JSON here..."
               sx={{
-                flex: 1,
-                minHeight: 0,
-                bgcolor: "#1e1e1e",
-                color: "white",
-                borderRadius: 2,
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
                 "& .MuiInputBase-root": {
                   height: "100%",
-                  alignItems: "stretch",
-                  overflowY: "auto",
+                  padding: 2,
+                  color: "#e0e0e0",
                 },
-                "& textarea": {
+                "& .MuiInputBase-input": {
                   height: "100% !important",
-                  resize: "none",
                   fontFamily: "monospace",
                   fontSize: "14px",
                   color: "#e0e0e0",
+                  overflowY: "auto !important",
+                },
+                // Scrollbar styling
+                "& .MuiInputBase-input::-webkit-scrollbar": {
+                  width: "8px",
+                },
+                "& .MuiInputBase-input::-webkit-scrollbar-thumb": {
+                  backgroundColor: "#666",
+                  borderRadius: "4px",
+                },
+                "& .MuiInputBase-input::-webkit-scrollbar-track": {
+                  backgroundColor: "#333",
                 },
               }}
             />
@@ -294,6 +308,8 @@ const App: React.FC = () => {
         ) : (
           <Box
             flex={1}
+            // Add height property here as well for consistency
+            height="100%"
             sx={{
               overflowY: "auto",
               bgcolor: "#1e1e1e",
